@@ -10,6 +10,9 @@ dist/
 # Downloaded files
 *.zip
 
+# Version data
+eb-versions.json
+
 # Debug files
 debug-*.html
 *.log
