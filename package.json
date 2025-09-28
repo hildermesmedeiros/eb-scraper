@@ -9,9 +9,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node dist/main.js",
-    "dev": "node --loader ts-node/esm src/main.ts",
-    "server": "node --loader ts-node/esm src/main.ts",
+    "start": "node --loader ts-node/esm src/main.ts",
     "install-global": "npm run build && npm install -g ."
   },
   "keywords": [
@@ -26,7 +24,8 @@
   "license": "MIT",
   "dependencies": {
     "commander": "^14.0.1",
-    "puppeteer": "^24.22.3"
+    "puppeteer": "^24.22.3",
+    "sanitize-filename": "^1.6.3"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

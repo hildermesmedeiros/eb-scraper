@@ -3,97 +3,116 @@
     {
       "version": "v1.18",
       "releaseDate": "23/07/2025",
-      "checksum": "bb4774c1669ae9cee019d26f446f24a600eb5b9e20ef13cad6bc295cd3de4966"
+      "checksum": "bb4774c1669ae9cee019d26f446f24a600eb5b9e20ef13cad6bc295cd3de4966",
+      "hashType": "SHA256"     
     },
     {
       "version": "v1.17",
       "releaseDate": "19/03/2025",
-      "checksum": "f3ea35b7e8f145d5b155621bf169431de96e154b672dbf483e5f86c678ad1785"
+      "checksum": "f3ea35b7e8f145d5b155621bf169431de96e154b672dbf483e5f86c678ad1785",
+      "hashType": "SHA256"
     },
     {
       "version": "v1.16",
       "releaseDate": "04/12/2024",
-      "checksum": "aa15b5115bca149b71eb13456a5b1858a572edfe53a7ce979bedb14e633bac21"
+      "checksum": "aa15b5115bca149b71eb13456a5b1858a572edfe53a7ce979bedb14e633bac21",
+      "hashType": "SHA256"
     },
     {
       "version": "v1.15",
       "releaseDate": "24/07/2024",
-      "checksum": "e6e1fb4e3590cb1c72f36fcf53b355d1d2422abf76fce76bdfef304845b8cce5"
+      "checksum": "e6e1fb4e3590cb1c72f36fcf53b355d1d2422abf76fce76bdfef304845b8cce5",
+      "hashType": "SHA256"
     },
     {
       "version": "v1.14",
       "releaseDate": "20/03/2024",
-      "checksum": "740f836560a11b7dcca9ba57e1214985be4556a4c88cd0b56858d66aa0e61849"
+      "checksum": "740f836560a11b7dcca9ba57e1214985be4556a4c88cd0b56858d66aa0e61849",
+      "hashType": "SHA256"
     },
     {
       "version": "v1.13",
       "releaseDate": "15/11/2023",
-      "checksum": "4a43d4d7dc04ed53d4f41fc469df9d78b3de38d66d4877aa90a20f99fe8cda79"
+      "checksum": "68824b71edc46d4f3a92dff2d61084c84bdc0849af974e7a2f2c583fba8c3b20",
+      "hashType": "SHA256"
     },
     {
       "version": "v1.12",
       "releaseDate": "06/07/2023",
-      "checksum": "4a43d4d7dc04ed53d4f41fc469df9d78b3de38d66d4877aa90a20f99fe8cda79"
+      "checksum": "4a43d4d7dc04ed53d4f41fc469df9d78b3de38d66d4877aa90a20f99fe8cda79",
+      "hashType": "SHA256"
     },
     {
       "version": "v1.11",
       "releaseDate": "15/03/2023",
-      "checksum": "b1c666908354c413263e02f3fedc75716a43ddf070f19f52af5f1607c1e21cf8"
+      "checksum": "b1c666908354c413263e02f3fedc75716a43ddf070f19f52af5f1607c1e21cf8",
+      "hashType": "SHA256"
     },
     {
       "version": "v1.10",
       "releaseDate": "30/11/2022",
-      "checksum": "8a0d458d3ed8894299bcba70caad09d7432f2d7f4e70302479608e454e2b1a1c"
+      "checksum": "8a0d458d3ed8894299bcba70caad09d7432f2d7f4e70302479608e454e2b1a1c",
+      "hashType": "SHA256"
     },
     {
       "version": "v1.9",
       "releaseDate": "20/07/2022",
-      "checksum": "068bfbef8f15fc15d53ee99305bd670c5293957ba6378a9c37047dd7323eef79"
+      "checksum": "068bfbef8f15fc15d53ee99305bd670c5293957ba6378a9c37047dd7323eef79",
+      "hashType": "SHA256"
     },
     {
       "version": "v1.8",
       "releaseDate": "13/04/2022",
-      "checksum": "d92fef91c40905e34f2d53d2aafc65c0d9d5015a8eabbeccc716d82f9d22530d"
+      "checksum": "d92fef91c40905e34f2d53d2aafc65c0d9d5015a8eabbeccc716d82f9d22530d",
+      "hashType": "SHA256"
     },
     {
       "version": "v1.7",
       "releaseDate": "12/01/2022",
-      "checksum": "2beeec3a680dbc5d5565e348a674a05d1452f139ce20586355b8ec8bce94c305"
+      "checksum": "2beeec3a680dbc5d5565e348a674a05d1452f139ce20586355b8ec8bce94c305",
+      "hashType": "SHA256"
     },
     {
       "version": "v1.6",
       "releaseDate": "20/10/2021",
-      "checksum": "071c0eb2fda3f360fdd70a5566ce1b41f9b0240582b9d380696cd5feafcfce8c"
+      "checksum": "071c0eb2fda3f360fdd70a5566ce1b41f9b0240582b9d380696cd5feafcfce8c",
+      "hashType": "SHA256"
     },
     {
       "version": "v1.5",
       "releaseDate": "21/07/2021",
-      "checksum": "a69243226a9358ac2d9699169fa15939"
+      "checksum": "a69243226a9358ac2d9699169fa15939",
+      "hashType": "MD5"
     },
     {
       "version": "v1.4",
       "releaseDate": "13/05/2021",
-      "checksum": "3a7ee0d7555f5292cb9596115d3bcf3e"
+      "checksum": "3a7ee0d7555f5292cb9596115d3bcf3e",
+      "hashType": "MD5"
     },
     {
       "version": "v1.3",
       "releaseDate": "28/01/2021",
-      "checksum": "078c821532b96b6cd1cef5895ba7e3e7"
+      "checksum": "078c821532b96b6cd1cef5895ba7e3e7",
+      "hashType": "MD5"
     },
     {
       "version": "v1.2",
       "releaseDate": "05/11/2020",
-      "checksum": "055b82dbe24a67272eb713021fd000df"
+      "checksum": "055b82dbe24a67272eb713021fd000df",
+      "hashType": "MD5"
     },
     {
       "version": "v1.1",
       "releaseDate": "23/07/2020",
-      "checksum": "c507c5fdb55434e9eedab16699f9d6a5"
+      "checksum": "16ee21ec0598a15ceadfc6f2b5868e03",
+      "hashType": "MD5"
     },
     {
       "version": "v1.00",
       "releaseDate": "27/02/2020",
-      "checksum": "86586db658fb00a765dd87f37f25bbed"
+      "checksum": "86586db658fb00a765dd87f37f25bbed",
+      "hashType": "MD5"
     }
   ],
   "lastScraped": "2025-09-27T12:00:00.000Z"

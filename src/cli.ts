@@ -6,6 +6,7 @@ import { Command } from 'commander';
 import { VersionManager } from './version-manager.js';
 import { Downloader } from './downloader.js';
 import { Scraper } from './scraper.js';
+import { PathValidator } from './path-validator.js';
 import { AppInfo, Messages, Validation, ExitCodes, FileNames } from './constants.js';
 
 export class CLI {
@@ -100,9 +101,26 @@ export class CLI {
     }
 
     /**
+     * Validate output path if provided
+     */
+    private validateOutputPath(outputPath?: string): string | undefined {
+        if (!outputPath) {
+            return undefined;
+        }
+
+        const validation = PathValidator.validateOutputPath(outputPath);
+        if (!validation.isValid) {
+            console.error(validation.error);
+            process.exit(ExitCodes.ERROR);
+        }
+
+        return validation.normalizedPath;
+    }
+
+    /**
      * Handle download command
      */
-    private async handleDownload(version: string): Promise<void> {
+    private async handleDownload(version: string, outputPath?: string): Promise<void> {
         // Validate version format
         if (!Validation.VERSION_PATTERN.test(version)) {
             console.error(Messages.INVALID_VERSION_FORMAT);
@@ -115,8 +133,11 @@ export class CLI {
             process.exit(ExitCodes.ERROR);
         }
 
+        // Validate output path if provided
+        const validatedOutputPath = this.validateOutputPath(outputPath);
+
         try {
-            await this.scraper.downloadVersion(version);
+            await this.scraper.downloadVersion(version, validatedOutputPath);
         } catch (error) {
             console.error(Messages.DOWNLOAD_FAILED, error instanceof Error ? error.message : String(error));
             process.exit(ExitCodes.ERROR);
@@ -140,7 +161,7 @@ export class CLI {
         }
         // Handle --d command
         else if (options.d) {
-            await this.handleDownload(options.d);
+            await this.handleDownload(options.d, options.output);
         }
         // No command provided, show help
         else {

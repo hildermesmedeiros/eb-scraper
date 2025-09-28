@@ -9,9 +9,10 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { FetchOptions, DownloadProgress, DownloadResult } from './types.js';
+import { HTTP, Math as MathConstants, Timeouts, UserAgent } from './constants.js';
 
 export class Downloader {
-    private userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36';
+    private userAgent = UserAgent.DEFAULT;
 
     /**
      * Download a file from URL with progress tracking
@@ -32,7 +33,7 @@ export class Downloader {
             };
 
             const request = protocol.get(url, options, (response) => {
-                if (response.statusCode !== 200) {
+                if (response.statusCode !== HTTP.SUCCESS_STATUS) {
                     reject(new Error(`HTTP ${response.statusCode}: ${response.statusMessage}`));
                     return;
                 }
@@ -58,7 +59,7 @@ export class Downloader {
                     bytesDownloaded += chunk.length;
                     
                     if (onProgress && totalBytes > 0) {
-                        const percentage = (bytesDownloaded / totalBytes) * 100;
+                        const percentage = (bytesDownloaded / totalBytes) * MathConstants.PERCENTAGE_MULTIPLIER;
                         onProgress({
                             bytesDownloaded,
                             totalBytes,
@@ -88,7 +89,7 @@ export class Downloader {
                 reject(error);
             });
 
-            request.setTimeout(30000, () => {
+            request.setTimeout(Timeouts.REQUEST_TIMEOUT, () => {
                 request.destroy();
                 reject(new Error('Request timeout'));
             });
@@ -118,12 +119,35 @@ export class Downloader {
     }
 
     /**
+     * Calculate MD5 checksum of a file
+     */
+    async calculateMD5Checksum(filePath: string): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const hash = crypto.createHash('md5');
+            const stream = fs.createReadStream(filePath);
+
+            stream.on('data', (data) => {
+                hash.update(data);
+            });
+
+            stream.on('end', () => {
+                resolve(hash.digest('hex'));
+            });
+
+            stream.on('error', (error) => {
+                reject(error);
+            });
+        });
+    }
+
+    /**
      * Download and verify a file
      */
     async downloadAndVerify(
         url: string, 
         outputPath: string, 
         expectedHash?: string,
+        hashType?: string,
         onProgress?: (progress: DownloadProgress) => void
     ): Promise<DownloadResult> {
         console.log(`📦 Starting download: ${path.basename(outputPath)}`);
@@ -132,7 +156,7 @@ export class Downloader {
         
         const stats = fs.statSync(outputPath);
         const fileSize = stats.size;
-        const fileSizeMB = (fileSize / (1024 * 1024)).toFixed(2);
+        const fileSizeMB = (fileSize / (MathConstants.BYTES_TO_MB * MathConstants.BYTES_TO_MB)).toFixed(2);
         
         console.log(`✅ Download completed: ${path.basename(outputPath)}`);
         console.log(`📏 File size: ${fileSizeMB} MB`);
@@ -141,10 +165,15 @@ export class Downloader {
         console.log(`✅ File: ${path.basename(outputPath)}`);
         console.log(`📊 Size: ${fileSizeMB} MB`);
         
-        const checksum = await this.calculateChecksum(outputPath);
+        // Determine which checksum algorithm to use based on hashType parameter or fallback to length detection
+        const isMD5Expected = hashType === 'MD5' || (expectedHash && expectedHash.length === 32 && !hashType);
+        const checksum = isMD5Expected 
+            ? await this.calculateMD5Checksum(outputPath)
+            : await this.calculateChecksum(outputPath);
         const downloadTime = new Date().toISOString();
         
-        console.log(`🔒 SHA256: ${checksum}`);
+        const algorithm = isMD5Expected ? 'MD5' : 'SHA256';
+        console.log(`🔒 ${algorithm}: ${checksum}`);
         console.log(`📅 Downloaded: ${downloadTime}`);
         
         // Verify hash if provided
@@ -154,9 +183,9 @@ export class Downloader {
             console.log(`Actual:   ${checksum}`);
             
             if (checksum.toLowerCase() === expectedHash.toLowerCase()) {
-                console.log('✅ Hash verification PASSED - File integrity confirmed!');
+                console.log(`✅ ${algorithm} hash verification PASSED - File integrity confirmed!`);
             } else {
-                console.log('❌ Hash verification FAILED - File may be corrupted!');
+                console.log(`❌ ${algorithm} hash verification FAILED - File may be corrupted!`);
                 throw new Error(`Hash verification failed! Expected: ${expectedHash}, Actual: ${checksum}`);
             }
         }
@@ -173,7 +202,7 @@ export class Downloader {
      * Format file size for display
      */
     formatFileSize(bytes: number): string {
-        const mb = bytes / (1024 * 1024);
+        const mb = bytes / (MathConstants.BYTES_TO_MB * MathConstants.BYTES_TO_MB);
         return `${mb.toFixed(2)} MB`;
     }
 
@@ -181,8 +210,8 @@ export class Downloader {
      * Format progress for display with line replacement
      */
     formatProgress(progress: DownloadProgress): string {
-        const mbDownloaded = (progress.bytesDownloaded / (1024 * 1024)).toFixed(2);
-        const mbTotal = (progress.totalBytes / (1024 * 1024)).toFixed(2);
+        const mbDownloaded = (progress.bytesDownloaded / (MathConstants.BYTES_TO_MB * MathConstants.BYTES_TO_MB)).toFixed(2);
+        const mbTotal = (progress.totalBytes / (MathConstants.BYTES_TO_MB * MathConstants.BYTES_TO_MB)).toFixed(2);
         return `\r⬇️  Progress: ${progress.percentage.toFixed(1)}% (${mbDownloaded}/${mbTotal} MB)`;
     }
 }

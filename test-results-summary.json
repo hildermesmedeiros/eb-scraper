@@ -1,0 +1,124 @@
+{
+  "timestamp": "2025-09-28T23:39:16.436Z",
+  "totalVersions": 19,
+  "successful": 19,
+  "failed": 0,
+  "successRate": "100.0%",
+  "totalTime": "5m 21s",
+  "results": [
+    {
+      "version": "v1.18",
+      "success": true,
+      "downloadTime": 18572,
+      "fileSize": "82.77 MB"
+    },
+    {
+      "version": "v1.17",
+      "success": true,
+      "downloadTime": 17512,
+      "fileSize": "89.8 MB"
+    },
+    {
+      "version": "v1.16",
+      "success": true,
+      "downloadTime": 15806,
+      "fileSize": "86.1 MB"
+    },
+    {
+      "version": "v1.15",
+      "success": true,
+      "downloadTime": 16854,
+      "fileSize": "78.27 MB"
+    },
+    {
+      "version": "v1.14",
+      "success": true,
+      "downloadTime": 17891,
+      "fileSize": "71.91 MB"
+    },
+    {
+      "version": "v1.13",
+      "success": true,
+      "downloadTime": 15898,
+      "fileSize": "54.46 MB"
+    },
+    {
+      "version": "v1.12",
+      "success": true,
+      "downloadTime": 18585,
+      "fileSize": "32.56 MB"
+    },
+    {
+      "version": "v1.11",
+      "success": true,
+      "downloadTime": 19180,
+      "fileSize": "29.17 MB"
+    },
+    {
+      "version": "v1.10",
+      "success": true,
+      "downloadTime": 18317,
+      "fileSize": "28.38 MB"
+    },
+    {
+      "version": "v1.9",
+      "success": true,
+      "downloadTime": 16489,
+      "fileSize": "24.15 MB"
+    },
+    {
+      "version": "v1.8",
+      "success": true,
+      "downloadTime": 18355,
+      "fileSize": "22.41 MB"
+    },
+    {
+      "version": "v1.7",
+      "success": true,
+      "downloadTime": 18249,
+      "fileSize": "20.1 MB"
+    },
+    {
+      "version": "v1.6",
+      "success": true,
+      "downloadTime": 14919,
+      "fileSize": "18.26 MB"
+    },
+    {
+      "version": "v1.5",
+      "success": true,
+      "downloadTime": 15378,
+      "fileSize": "15.35 MB"
+    },
+    {
+      "version": "v1.4",
+      "success": true,
+      "downloadTime": 15342,
+      "fileSize": "15.19 MB"
+    },
+    {
+      "version": "v1.3",
+      "success": true,
+      "downloadTime": 15520,
+      "fileSize": "13.25 MB"
+    },
+    {
+      "version": "v1.2",
+      "success": true,
+      "downloadTime": 15023,
+      "fileSize": "13.17 MB"
+    },
+    {
+      "version": "v1.1",
+      "success": true,
+      "downloadTime": 17749,
+      "fileSize": "82.77 MB"
+    },
+    {
+      "version": "v1.00",
+      "success": true,
+      "downloadTime": 15961,
+      "fileSize": "8.17 MB"
+    }
+  ]
+}

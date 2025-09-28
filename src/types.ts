@@ -12,6 +12,7 @@ export interface EBVersion {
     lastUpdated: string;
     checksum?: string;
     releaseDate?: string;
+    hashType?: string;
 }
 
 export interface EBVersionsData {

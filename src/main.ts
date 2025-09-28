@@ -4,6 +4,7 @@
  * ArcGIS Experience Builder Downloader
  * Main entry point for the application
  */
+import { ExitCodes } from './constants.js';
 
 import { CLI } from './cli.js';
 
@@ -13,7 +14,7 @@ async function main(): Promise<void> {
         await cli.run();
     } catch (error) {
         console.error('❌ Application error:', error instanceof Error ? error.message : String(error));
-        process.exit(1);
+        process.exit(ExitCodes.ERROR);
     }
 }
 

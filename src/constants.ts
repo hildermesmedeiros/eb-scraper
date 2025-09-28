@@ -18,6 +18,10 @@ export enum Urls {
     DOWNLOADS_PAGE = 'https://developers.arcgis.com/experience-builder/guide/downloads/'
 }
 
+export const UserAgent = {
+    DEFAULT: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+} as const;
+
 export enum Messages {
     // Version management
     VERSIONS_HEADER = '=== Available Experience Builder Versions ===',
@@ -26,6 +30,14 @@ export enum Messages {
     
     // Version format validation
     INVALID_VERSION_FORMAT = '❌ Error: Version must be in format X.Y (e.g., 1.18)',
+    
+    // Path validation
+    INVALID_PATH_FORMAT = '❌ Error: Invalid output path format',
+    PATH_TOO_LONG = '❌ Error: Output path is too long (maximum 4096 characters)',
+    FILENAME_TOO_LONG = '❌ Error: Filename is too long (maximum 255 characters)',
+    INVALID_PATH_CHARS = '❌ Error: Output path contains invalid characters',
+    RESERVED_FILENAME = '❌ Error: Filename is reserved by the operating system',
+    EMPTY_PATH = '❌ Error: Output path cannot be empty',
     
     // Error messages
     GET_VERSION_FAILED = '❌ Get version failed:',
@@ -38,7 +50,7 @@ export enum Messages {
 
 export enum Selectors {
     // Download page selectors
-    DOWNLOAD_BUTTON = 'calcite-button[data-component-link="arcgis-experience-builder-{version}.zip"]',
+    DOWNLOAD_BUTTON = 'calcite-button[data-component-link*="arcgis-experience-builder"]',
     CALCITE_DIALOG = 'calcite-dialog',
     COPY_BUTTON = 'calcite-button[icon-start="copy-to-clipboard"]',
     TABLE_ROWS = 'tr',
@@ -52,13 +64,36 @@ export enum Timeouts {
     PAGE_LOAD = 3000,
     DIALOG_WAIT = 5000,
     CLIPBOARD_WAIT = 1000,
-    MODAL_CLOSE = 2000
+    MODAL_CLOSE = 2000,
+    DOWNLOAD_URL_CAPTURE = 5000,
+    REQUEST_TIMEOUT = 30000
 }
 
 export const Validation = {
-    VERSION_PATTERN: /^\d+\.\d+$/,
+    VERSION_PATTERN: /^v?\d+\.\d+$/,
     HASH_LENGTH: 64,
-    HASH_PATTERN: /^[a-f0-9]+$/i
+    HASH_PATTERN: /^[a-f0-9]+$/i,
+    // Path validation
+    MAX_PATH_LENGTH: 4096, // Maximum path length on most systems
+    MAX_FILENAME_LENGTH: 255, // Maximum filename length on most systems
+    INVALID_PATH_CHARS: /[<>:"|?*\x00-\x1f]/g, // Invalid characters for file paths
+    INVALID_FILENAME_CHARS: /[<>:"|?*\x00-\x1f]/g, // Invalid characters for filenames
+    RESERVED_NAMES: /^(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])$/i, // Reserved Windows names
+    PATH_PATTERN: /^[^<>:"|?*\x00-\x1f]+$/ // Basic valid path pattern
+} as const;
+
+export const Display = {
+    HASH_PREVIEW_LENGTH: 16,
+    DEBUG_TEXT_LENGTH: 200
+} as const;
+
+export const HTTP = {
+    SUCCESS_STATUS: 200
+} as const;
+
+export const Math = {
+    BYTES_TO_MB: 1024,
+    PERCENTAGE_MULTIPLIER: 100
 } as const;
 
 export enum ExitCodes {

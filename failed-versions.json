@@ -1,0 +1,141 @@
+{
+  "timestamp": "2025-09-28T23:33:24.812Z",
+  "totalFailed": 19,
+  "failedVersions": [
+    "v1.18",
+    "v1.17",
+    "v1.16",
+    "v1.15",
+    "v1.14",
+    "v1.13",
+    "v1.12",
+    "v1.11",
+    "v1.10",
+    "v1.9",
+    "v1.8",
+    "v1.7",
+    "v1.6",
+    "v1.5",
+    "v1.4",
+    "v1.3",
+    "v1.2",
+    "v1.1",
+    "v1.00"
+  ],
+  "failedDetails": [
+    {
+      "version": "v1.18",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_22_042Z-debug-0.log\n",
+      "downloadTime": 167
+    },
+    {
+      "version": "v1.17",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_22_208Z-debug-0.log\n",
+      "downloadTime": 167
+    },
+    {
+      "version": "v1.16",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_22_367Z-debug-0.log\n",
+      "downloadTime": 153
+    },
+    {
+      "version": "v1.15",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_22_519Z-debug-0.log\n",
+      "downloadTime": 144
+    },
+    {
+      "version": "v1.14",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_22_660Z-debug-0.log\n",
+      "downloadTime": 151
+    },
+    {
+      "version": "v1.13",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_22_820Z-debug-0.log\n",
+      "downloadTime": 149
+    },
+    {
+      "version": "v1.12",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_22_966Z-debug-0.log\n",
+      "downloadTime": 152
+    },
+    {
+      "version": "v1.11",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_23_125Z-debug-0.log\n",
+      "downloadTime": 154
+    },
+    {
+      "version": "v1.10",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_23_269Z-debug-0.log\n",
+      "downloadTime": 147
+    },
+    {
+      "version": "v1.9",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_23_412Z-debug-0.log\n",
+      "downloadTime": 151
+    },
+    {
+      "version": "v1.8",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_23_564Z-debug-0.log\n",
+      "downloadTime": 142
+    },
+    {
+      "version": "v1.7",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_23_707Z-debug-0.log\n",
+      "downloadTime": 147
+    },
+    {
+      "version": "v1.6",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_23_856Z-debug-0.log\n",
+      "downloadTime": 145
+    },
+    {
+      "version": "v1.5",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_24_000Z-debug-0.log\n",
+      "downloadTime": 143
+    },
+    {
+      "version": "v1.4",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_24_145Z-debug-0.log\n",
+      "downloadTime": 146
+    },
+    {
+      "version": "v1.3",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_24_290Z-debug-0.log\n",
+      "downloadTime": 147
+    },
+    {
+      "version": "v1.2",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_24_439Z-debug-0.log\n",
+      "downloadTime": 144
+    },
+    {
+      "version": "v1.1",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_24_581Z-debug-0.log\n",
+      "downloadTime": 143
+    },
+    {
+      "version": "v1.00",
+      "success": false,
+      "error": "npm error Missing script: \"server\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: /home/hjose/.npm/_logs/2025-09-28T23_33_24_727Z-debug-0.log\n",
+      "downloadTime": 151
+    }
+  ]
+}

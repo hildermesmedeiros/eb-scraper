@@ -5,7 +5,8 @@
 import puppeteer from 'puppeteer';
 import { VersionManager } from './version-manager.js';
 import { Downloader } from './downloader.js';
-import { Urls, Selectors, Timeouts, Validation, Messages, FileNames, UrlPatterns } from './constants.js';
+import { PathValidator } from './path-validator.js';
+import { Urls, Selectors, Timeouts, Validation, Messages, FileNames, UrlPatterns, Display, UserAgent } from './constants.js';
 
 export class Scraper {
     private versionManager: VersionManager;
@@ -138,7 +139,7 @@ export class Scraper {
                     
                     // Check if it's a valid hash
                     if (hashFromInput && hashFromInput.length === Validation.HASH_LENGTH && Validation.HASH_PATTERN.test(hashFromInput)) {
-                        console.log(`✅ Found hash in input field: ${hashFromInput.substring(0, 16)}...`);
+                        console.log(`✅ Found hash in input field: ${hashFromInput.substring(0, Display.HASH_PREVIEW_LENGTH)}...`);
                         
                         // Close the checksums modal
                         console.log('🚪 Closing checksums modal...');
@@ -166,7 +167,7 @@ export class Scraper {
                         console.log('📋 Clipboard content (fallback):', clipboardText);
                         
                         if (clipboardText && clipboardText.length === Validation.HASH_LENGTH && Validation.HASH_PATTERN.test(clipboardText)) {
-                            console.log(`✅ Found hash in clipboard: ${clipboardText.substring(0, 16)}...`);
+                            console.log(`✅ Found hash in clipboard: ${clipboardText.substring(0, Display.HASH_PREVIEW_LENGTH)}...`);
                             return clipboardText;
                         }
                     }
@@ -297,21 +298,21 @@ export class Scraper {
                     const value = input.value;
                     console.log(`Input ${i}: type="${input.type}", value="${value}", length=${value?.length}`);
                     
-                    if (value && value.length === 64 && /^[a-f0-9]+$/i.test(value)) {
-                        console.log(`Found hash in input ${i}: ${value.substring(0, 16)}...`);
-                        return { hash: value, debug: `Found hash in input ${i}: ${value.substring(0, 16)}...` };
+                    if (value && value.length === Validation.HASH_LENGTH && Validation.HASH_PATTERN.test(value)) {
+                        console.log(`Found hash in input ${i}: ${value.substring(0, Display.HASH_PREVIEW_LENGTH)}...`);
+                        return { hash: value, debug: `Found hash in input ${i}: ${value.substring(0, Display.HASH_PREVIEW_LENGTH)}...` };
                     }
                 }
                 
                 // Fallback: look for any 64-character hex string in the dialog text
-                const hashMatches = dialogText.match(/\b[a-f0-9]{64}\b/gi);
+                const hashMatches = dialogText.match(new RegExp(`\\b[a-f0-9]{${Validation.HASH_LENGTH}}\\b`, 'gi'));
                 if (hashMatches) {
                     console.log('Found hash matches in text:', hashMatches);
-                    return { hash: hashMatches[0], debug: `Found hash in dialog text: ${hashMatches[0].substring(0, 16)}...` };
+                    return { hash: hashMatches[0], debug: `Found hash in dialog text: ${hashMatches[0].substring(0, Display.HASH_PREVIEW_LENGTH)}...` };
                 }
                 
                 console.log('No hash found in dialog');
-                return { hash: null, debug: `No hash found. Dialog has ${inputs.length} inputs, text: ${dialogText.substring(0, 200)}` };
+                return { hash: null, debug: `No hash found. Dialog has ${inputs.length} inputs, text: ${dialogText.substring(0, Display.DEBUG_TEXT_LENGTH)}` };
             });
             
             console.log(`🔍 Hash extraction result:`, hash);
@@ -321,7 +322,7 @@ export class Scraper {
             // If we clicked a copy button, try to read from clipboard
             if (extractedHash === 'CLICKED_COPY_BUTTON') {
                 console.log('📋 Reading from clipboard...');
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for clipboard to update
+                await new Promise(resolve => setTimeout(resolve, Timeouts.CLIPBOARD_WAIT)); // Wait for clipboard to update
                 
                 try {
                     const clipboardText = await page.evaluate(() => {
@@ -330,8 +331,8 @@ export class Scraper {
                     console.log('📋 Clipboard content:', clipboardText);
                     
                     // Check if it's a valid hash
-                    if (clipboardText && clipboardText.length === 64 && /^[a-f0-9]+$/i.test(clipboardText)) {
-                        console.log(`✅ Found hash in clipboard: ${clipboardText.substring(0, 16)}...`);
+                    if (clipboardText && clipboardText.length === Validation.HASH_LENGTH && Validation.HASH_PATTERN.test(clipboardText)) {
+                        console.log(`✅ Found hash in clipboard: ${clipboardText.substring(0, Display.HASH_PREVIEW_LENGTH)}...`);
                         extractedHash = clipboardText;
                     } else {
                         console.log('⚠️ Clipboard content is not a valid hash');
@@ -373,7 +374,7 @@ export class Scraper {
             });
             
             // Wait for dialog to close
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, Timeouts.CLIPBOARD_WAIT));
             
             return extractedHash;
             
@@ -400,15 +401,18 @@ export class Scraper {
             });
             
             const page = await browser.newPage();
-            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
+            await page.setExtraHTTPHeaders({
+                'User-Agent': UserAgent.DEFAULT
+            });
             
             console.log('📄 Navigating to downloads page...');
             await page.goto(Urls.DOWNLOADS_PAGE, { waitUntil: 'networkidle2' });
             await new Promise(resolve => setTimeout(resolve, Timeouts.PAGE_LOAD));
             
-            console.log(`🔍 Looking for v${version} download button...`);
+            console.log(`🔍 Looking for ${version} download button...`);
             
-            const downloadButton = await page.$(Selectors.DOWNLOAD_BUTTON.replace('{version}', version));
+            const versionForSelector = version.startsWith('v') ? version.substring(1) : version;
+            const downloadButton = await page.$(Selectors.DOWNLOAD_BUTTON.replace('{version}', versionForSelector));
             
             if (!downloadButton) {
                 console.log(`❌ Could not find download button for version ${version}`);
@@ -439,7 +443,7 @@ export class Scraper {
             }, downloadButton);
             
             // Wait for download URL to be captured
-            await new Promise(resolve => setTimeout(resolve, 5000));
+            await new Promise(resolve => setTimeout(resolve, Timeouts.DOWNLOAD_URL_CAPTURE));
             
             if (downloadUrl) {
                 console.log(`🎯 Found download URL: ${downloadUrl}`);
@@ -451,6 +455,7 @@ export class Scraper {
                     downloadUrl, 
                     outputPath,
                     undefined, // No expected hash for this operation
+                    undefined, // No hash type for this operation
                     (progress) => {
                         process.stdout.write(this.downloader.formatProgress(progress));
                     }
@@ -486,11 +491,21 @@ export class Scraper {
         if (!versionData) {
             throw new Error(Messages.VERSION_NOT_FOUND.replace('{version}', version));
         }
+
+        // Validate output path if provided
+        let validatedOutputPath = outputPath;
+        if (outputPath) {
+            const validation = PathValidator.validateOutputPath(outputPath);
+            if (!validation.isValid) {
+                throw new Error(validation.error);
+            }
+            validatedOutputPath = validation.normalizedPath;
+        }
         
         let browser;
         
         try {
-            console.log(`=== ArcGIS Experience Builder v${version} Downloader ===`);
+            console.log(`=== ArcGIS Experience Builder ${version} Downloader ===`);
             console.log('🚀 Launching browser...');
             
             browser = await puppeteer.launch({
@@ -499,15 +514,30 @@ export class Scraper {
             });
             
             const page = await browser.newPage();
-            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
+            await page.setExtraHTTPHeaders({
+                'User-Agent': UserAgent.DEFAULT
+            });
             
             console.log('📄 Navigating to downloads page...');
             await page.goto(Urls.DOWNLOADS_PAGE, { waitUntil: 'networkidle2' });
             await new Promise(resolve => setTimeout(resolve, Timeouts.PAGE_LOAD));
             
-            console.log(`🔍 Looking for v${version} download button...`);
+            console.log(`🔍 Looking for ${version} download button...`);
             
-            const downloadButton = await page.$(Selectors.DOWNLOAD_BUTTON.replace('{version}', version));
+            // Find all download buttons and look for the one that matches our version
+            const downloadButtons = await page.$$('calcite-button[data-component-link*="arcgis-experience-builder"]');
+            let downloadButton = null;
+            
+            // Normalize version format (remove 'v' prefix and handle 1.00 -> 1.0)
+            const normalizedVersion = version.replace('v', '').replace(/\.0+$/, '.0');
+            
+            for (const button of downloadButtons) {
+                const dataComponentLink = await button.evaluate(el => el.getAttribute('data-component-link'));
+                if (dataComponentLink && dataComponentLink.includes(normalizedVersion)) {
+                    downloadButton = button;
+                    break;
+                }
+            }
             
             if (!downloadButton) {
                 throw new Error(`Could not find download button for version ${version}`);
@@ -537,12 +567,12 @@ export class Scraper {
             }, downloadButton);
             
             // Wait for download URL to be captured
-            await new Promise(resolve => setTimeout(resolve, 5000));
+            await new Promise(resolve => setTimeout(resolve, Timeouts.DOWNLOAD_URL_CAPTURE));
             
             if (downloadUrl) {
                 console.log(`🎯 Found download URL: ${downloadUrl}`);
                 
-                const finalOutputPath = outputPath || `${FileNames.DEFAULT_OUTPUT_PREFIX}-${version}${FileNames.DEFAULT_OUTPUT_EXTENSION}`;
+                const finalOutputPath = validatedOutputPath || `${FileNames.DEFAULT_OUTPUT_PREFIX}-${version}${FileNames.DEFAULT_OUTPUT_EXTENSION}`;
                 
                 console.log('\n=== Downloading from captured URL ===');
                 
@@ -551,6 +581,7 @@ export class Scraper {
                     downloadUrl, 
                     finalOutputPath,
                     versionData.checksum || undefined,
+                    versionData.hashType || undefined,
                     (progress) => {
                         process.stdout.write(this.downloader.formatProgress(progress));
                     }

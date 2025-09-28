@@ -35,31 +35,31 @@ npm install
 
 ```bash
 # List all available versions and their checksums
-npm run dev -- --list
+npm start -- --list
 
 # Get and verify hash for a specific version
-npm run dev -- --get-version 1.18
+npm start -- --get-version 1.18
 ```
 
 ### Download Commands
 
 ```bash
 # Download a specific version using stored checksum
-npm run dev -- --d 1.18
+npm start -- --d 1.18
 
 # Download with custom output filename
-npm run dev -- --d 1.18 --output my-eb.zip
+npm start -- --d 1.18 --output my-eb.zip
 ```
 
 ### Development Mode
 
 ```bash
 # Run TypeScript directly
-npm run dev -- --d 1.18
+npm start -- --d 1.18
 
 # Build and run
 npm run build
-npm start -- --d 1.18
+node dist/main.js -- --d 1.18
 ```
 
 ## CLI Options
@@ -78,10 +78,35 @@ npm start -- --d 1.18
 
 ## Scripts
 
-- `npm run dev` - Run TypeScript source directly using ts-node
+- `npm run start` - Run TypeScript source directly using ts-node
 - `npm run build` - Compile TypeScript to JavaScript
-- `npm start` - Build and run the compiled JavaScript
 - `npm run install-global` - Build and install globally as `eb-downloader`
+
+## Global Installation
+
+### Install Globally
+
+```bash
+# Build and install globally
+npm run install-global
+```
+
+After installation, you can use the tool from anywhere:
+
+```bash
+# List versions
+eb-downloader --list
+
+# Download a version
+eb-downloader --d 1.18
+```
+
+### Uninstall Globally
+
+```bash
+# Uninstall the global package
+npm uninstall -g eb-downloader
+```
 
 ## How It Works
 
@@ -106,7 +131,7 @@ The downloader uses **Puppeteer** (headless browser automation) to:
 
 #### List Versions
 ```bash
-$ npm run dev -- --list
+$ npm start -- --list
 
 === Available Experience Builder Versions ===
 📋 Found 19 versions:
@@ -119,7 +144,7 @@ v1.16 - 04/12/2024 - aa15b5115bca149b71eb13456a5b1858a572edfe53a7ce979bedb14e633
 
 #### Download with Hash Verification
 ```bash
-$ npm run dev -- --d 1.18
+$ npm start -- --d 1.18
 
 === ArcGIS Experience Builder v1.18 Downloader ===
 🚀 Launching browser...
@@ -151,7 +176,7 @@ Actual:   bb4774c1669ae9cee019d26f446f24a600eb5b9e20ef13cad6bc295cd3de4966
 
 #### Hash Verification Error
 ```bash
-$ npm run dev -- --d 1.18
+$ npm start -- --d 1.18
 
 === Hash Verification ===
 Expected: wronghash123456789abcdef
@@ -207,13 +232,89 @@ The application is built with a modular architecture for better maintainability:
 ## Version Management Workflow
 
 ### Initial Setup
-1. **List available versions**: `npm run dev -- --list`
-2. **Get hashes for specific versions**: `npm run dev -- --get-version 1.18`
+1. **List available versions**: `npm start -- --list`
+2. **Get hashes for specific versions**: `npm start -- --get-version 1.18`
 
 ### Regular Usage
-1. **Download with stored checksum**: `npm run dev -- --d 1.18`
+1. **Download with stored checksum**: `npm start -- --d 1.18`
 2. **Update checksums manually**: Edit `versions-list.json` file
 
+
+
+## Test
+```bash
+📋 Found 19 versions to test
+
+
+[1/19] Testing version v1.18...
+✅ SUCCESS: v1.18 (82.77 MB, 18572ms)
+
+[2/19] Testing version v1.17...
+✅ SUCCESS: v1.17 (89.8 MB, 17512ms)
+
+[3/19] Testing version v1.16...
+✅ SUCCESS: v1.16 (86.1 MB, 15806ms)
+
+[4/19] Testing version v1.15...
+✅ SUCCESS: v1.15 (78.27 MB, 16854ms)
+
+[5/19] Testing version v1.14...
+✅ SUCCESS: v1.14 (71.91 MB, 17891ms)
+
+[6/19] Testing version v1.13...
+✅ SUCCESS: v1.13 (54.46 MB, 15898ms)
+
+[7/19] Testing version v1.12...
+✅ SUCCESS: v1.12 (32.56 MB, 18585ms)
+
+[8/19] Testing version v1.11...
+✅ SUCCESS: v1.11 (29.17 MB, 19180ms)
+
+[9/19] Testing version v1.10...
+✅ SUCCESS: v1.10 (28.38 MB, 18317ms)
+
+[10/19] Testing version v1.9...
+✅ SUCCESS: v1.9 (24.15 MB, 16489ms)
+
+[11/19] Testing version v1.8...
+✅ SUCCESS: v1.8 (22.41 MB, 18355ms)
+
+[12/19] Testing version v1.7...
+✅ SUCCESS: v1.7 (20.1 MB, 18249ms)
+
+[13/19] Testing version v1.6...
+✅ SUCCESS: v1.6 (18.26 MB, 14919ms)
+
+[14/19] Testing version v1.5...
+✅ SUCCESS: v1.5 (15.35 MB, 15378ms)
+
+[15/19] Testing version v1.4...
+✅ SUCCESS: v1.4 (15.19 MB, 15342ms)
+
+[16/19] Testing version v1.3...
+$ ✅ SUCCESS: v1.3 (13.25 MB, 15520ms)
+
+[17/19] Testing version v1.2...
+✅ SUCCESS: v1.2 (13.17 MB, 15023ms)
+
+[18/19] Testing version v1.1...
+✅ SUCCESS: v1.1 (82.77 MB, 17749ms)
+
+[19/19] Testing version v1.00...
+✅ SUCCESS: v1.00 (8.17 MB, 15961ms)
+
+============================================================
+📊 TEST SUMMARY
+============================================================
+Total Versions: 19
+✅ Successful: 19
+❌ Failed: 0
+📈 Success Rate: 100.0%
+⏱️  Total Time: 5m 21s
+
+📄 Reports saved:
+  - test-results-summary.json (complete results)
+```
 ### Version Database
 The tool uses `versions-list.json` with:
 - Version numbers and their SHA256 checksums
